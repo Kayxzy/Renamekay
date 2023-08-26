@@ -1,15 +1,15 @@
 import os 
 from pyrogram import Client, filters
 from pyrogram.types import ( InlineKeyboardButton, InlineKeyboardMarkup)
-token = os.environ.get('TOKEN','')
+token = os.environ.get('TOKEN','5979614687:AAHbj6UprKT9hq7jSOSBMS4Ln683EwSEdJg')
 botid = token.split(':')[0]
-ADMIN = int(os.environ.get("ADMIN", ""))
+ADMIN = int(os.environ.get("ADMIN", "1668766845"))
 
 from helper.database import botdata, find_one, total_user,getid
 
 from helper.progress import humanbytes
 
-@Client.on_message(filters.private & filters.user(ADMIN)  & filters.command(["lazyusers"]))
+@Client.on_message(filters.private & filters.user(ADMIN)  & filters.command(["kayusers"]))
 async def start(client,message):
 	botdata(int(botid))
 	data = find_one(int(botid))
