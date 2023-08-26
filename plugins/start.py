@@ -127,7 +127,6 @@ async def send_doc(client, message):
                                                                      [InlineKeyboardButton("🦋 Subscribe us 🦋", url="https://t.me/caritemangobrolvirtual")],
 				                                     [InlineKeyboardButton("Support Group", url='https://t.me/media_tiktok')],
                                                                      [InlineKeyboardButton("☕ Dana Link ☕", url='https://link.dana.id/qr/mbnp21sb')]
-                                                                    ])
         await message.reply_text(text=f"🦋")
         return 
 
