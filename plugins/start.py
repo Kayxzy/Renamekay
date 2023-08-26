@@ -123,10 +123,11 @@ async def send_doc(client, message):
     except:
         await message.reply_text(text=f"Hello dear {message.from_user.first_name}  **we are currently working on this issue**\n\nPlease try to rename files from your another account.\nBecause this BOT can't rename file sent by some ids.\n\nIf you are an **ADMIN** Don't worry ! here we have a solution for you dear {message.from_user.first_name }.\n\nPlease use \n👉 `/addpremium your_other_userid` 👈 to use premium feautres\n\n",
                                   reply_markup=InlineKeyboardMarkup([
-                                                                     [[InlineKeyboardButton("🔺 Update Channel 🔺", url="https://t.me/niciskaymart")],
+                                                                     [InlineKeyboardButton("🦋 Contact Kay 🦋", url='https://telegram.me/xflskay')],
                                                                      [InlineKeyboardButton("🦋 Subscribe us 🦋", url="https://t.me/caritemangobrolvirtual")],
-				                                     [InlineKeyboardButton("Support Group", url='https://t.me/media_tiktok')],
-                                                                     [InlineKeyboardButton("☕ Dana Link ☕", url='https://link.dana.id/qr/mbnp21sb')]
+                                                                     [InlineKeyboardButton("🦋 Visit Channel  ", url='https://t.me/niciskaymart'),
+                                                                     InlineKeyboardButton("☕ Dana Link ☕", url='https://link.dana.id/qr/mbnp21sb')]
+                                                                    ]))
         await message.reply_text(text=f"🦋")
         return 
 
