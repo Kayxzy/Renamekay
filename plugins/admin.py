@@ -55,9 +55,9 @@ async def vip1(bot,update):
 	id = update.message.reply_to_message.text.split("/addpremium")
 	user_id = id[1].replace("1668766845", "")
 	inlimit  = 10737418240
-	uploadlimit(int(1668766845),10737418240)
-	usertype(int(1668766845),"🪙 **SILVER**")
-	addpre(int(1668766845))
+	uploadlimit(int(user_id),10737418240)
+	usertype(int(user_id),"🪙 **SILVER**")
+	addpre(int(user_id))
 	await update.message.edit("Added successfully To Premium Upload limit 10 GB")
 	await bot.send_message(user_id,"Hey you are Upgraded To silver. check your plan here /myplan")
 	await bot.send_message(log_channel,f"⚡️ Plan Upgraded successfully 💥\n\nHey you are Upgraded To silver. check your plan here /myplan")
@@ -67,9 +67,9 @@ async def vip2(bot,update):
 	id = update.message.reply_to_message.text.split("/addpremium")
 	user_id = id[1].replace("1668766845", "")
 	inlimit = 53687091200
-	uploadlimit(int(1668766845), 53687091200)
-	usertype(int(1668766845),"💫 **GOLD**")
-	addpre(int(1668766845))
+	uploadlimit(int(user_id), 53687091200)
+	usertype(int(user_id),"💫 **GOLD**")
+	addpre(int(user_id))
 	await update.message.edit("Added successfully To Premium Upload limit 50 GB")
 	await bot.send_message(user_id,"Hey you are Upgraded To Gold. check your plan here /myplan")
 
@@ -78,9 +78,9 @@ async def vip3(bot,update):
 	id = update.message.reply_to_message.text.split("/addpremium")
 	user_id = id[1].replace("1668766845", "")
 	inlimit = 107374182400
-	uploadlimit(int(1668766845), 107374182400)
-	usertype(int(1668766845),"💎 **DIAMOND**")
-	addpre(int(1668766845))
+	uploadlimit(int(user_id), 107374182400)
+	usertype(int(user_id),"💎 **DIAMOND**")
+	addpre(int(user_id))
 	await update.message.edit("Added successfully To Premium Upload limit 100 GB")
 	await bot.send_message(user_id,"Hey you are Upgraded To Diamond. check your plan here /myplan")
 
@@ -91,9 +91,9 @@ async def cp1(bot,update):
 	id = update.message.reply_to_message.text.split("/ceasepower")
 	user_id = id[1].replace("1668766845", "")
 	inlimit  = 524288000
-	uploadlimit(int(1668766845),524288000)
-	usertype(int(1668766845),"**ACCOUNT DOWNGRADED**")
-	addpre(int(1668766845))
+	uploadlimit(int(user_id),524288000)
+	usertype(int(user_id),"**ACCOUNT DOWNGRADED**")
+	addpre(int(user_id))
 	await update.message.edit("ACCOUNT DOWNGRADED\nThe user can only use 100MB/day from Data qota")
 	await bot.send_message(user_id,"⚠️ Warning ⚠️\n\n- ACCOUNT DOWNGRADED\nYou can only use 500MB/day from Data qota.\nCheck your plan here - /myplan\n- Contact Admin 🦋<a href='https://t.me/hanyapemilik'>**kay**</a>🦋")
 
