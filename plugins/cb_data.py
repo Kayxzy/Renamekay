@@ -61,7 +61,7 @@ async def doc(bot, update):
     file_path = f"downloads/{new_filename}"
     message = update.message.reply_to_message
     file = message.document or message.video or message.audio
-    ms = await update.message.edit("```Trying To Download...```")
+    await update.message.edit("```Trying To Download...```")
     used_limit(update.from_user.id, file.file_size)
     c_time = time.time()
     total_used = used + int(file.file_size)
@@ -153,7 +153,7 @@ async def vid(bot, update):
     file_path = f"downloads/{new_filename}"
     message = update.message.reply_to_message
     file = message.document or message.video or message.audio
-    ms = await ms.edit(text="```Trying To Download...```")
+    ms = await update.message.edit("```Trying To Download...```")
     used_limit(update.from_user.id, file.file_size)
     c_time = time.time()
     total_used = used + int(file.file_size)
