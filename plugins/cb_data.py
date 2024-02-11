@@ -18,9 +18,9 @@ import os
 
 log_channel = int(os.environ.get("LOG_CHANNEL", "-1001848660912"))
 
-API_ID = int(os.environ.get("API_ID", "17131033"))
+API_ID = int(os.environ.get("API_ID", "1848660912"))
 
-API_HASH = os.environ.get("API_HASH", "7768488c115ac09684bb38e608c47997")
+API_HASH = os.environ.get("API_HASH", "3f1373ede58a6d52d89ec0f8700fd688")
 
 STRING = os.environ.get("STRING", "")
 
