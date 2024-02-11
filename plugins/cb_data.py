@@ -174,7 +174,7 @@ async def vid(bot, update):
         pass
     ph_path = None
     user_id = int(update.message.chat.id)
-    vid = getattr(file, file.vid.value)
+    data = find(user_id)
     c_caption = await db.get_caption(update.message.chat.id)
     c_thumb = await db.get_thumbnail(update.message.chat.id)
 
