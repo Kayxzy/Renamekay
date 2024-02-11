@@ -165,14 +165,22 @@ async def vid(bot, update):
     except Exception as e:
      	return await ms.edit(e)
      	     
-    duration = 0
+    except Exception as e:
+        neg_used = used - int(file.file_size)
+        used_limit(update.from_user.id, neg_used)
+        await ms.edit(e)
+        return
+    splitpath = path.split("downloads/")
+    dow_file_name = splitpath[1]
+    old_file_name = f"downloads/{dow_file_name}"
+    os.rename(old_file_name, file_path)
+    user_id = int(update.message.chat.id)
+    data = find(user_id)
     try:
-        metadata = extractMetadata(createParser(file_path))
-        if metadata.has("duration"):
-           duration = metadata.get('duration').seconds
+        c_caption = data[1]
     except:
         pass
-    
+    thumb = data[0]
     if c_caption:
         doc_list = ["filename", "filesize"]
         new_tex = escape_invalid_curly_brackets(c_caption, doc_list)
