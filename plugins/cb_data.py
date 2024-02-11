@@ -169,7 +169,6 @@ async def vid(bot, update):
         await ms.edit(e)
         return
     splitpath = path.split("./downloads/")
-    dow_file_name = splitpath[1]
     old_file_name = f"DOWNLOAD_DIR/{dow_file_name}"
     os.rename(old_file_name, file_path)
     user_id = int(update.message.chat.id)
