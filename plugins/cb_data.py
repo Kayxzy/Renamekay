@@ -152,8 +152,9 @@ async def vid(bot, update):
     new_filename = name[1]
     file_path = f"downloads/{new_filename}"
     message = update.message.reply_to_message
-    file = update.message.reply_to_message
+    file = message.document or message.video or message.audio
     ms = await update.message.edit("Tʀyɪɴɢ Tᴏ Dᴏᴡɴʟᴏᴀᴅɪɴɢ....")
+    used_limit(update.from_user.id, file.file_size)
     c_time = time.time()
     total_used = used + int(file.file_size)
     used_limit(update.from_user.id, total_used)
