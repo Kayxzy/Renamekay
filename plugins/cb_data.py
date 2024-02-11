@@ -161,45 +161,43 @@ async def vid(bot, update):
     total_used = used + int(file.file_size)
     used_limit(update.from_user.id, total_used)
     try:
-    try:
      	path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram,progress_args=("Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))                    
     except Exception as e:
      	return await ms.edit(e)
-
-    except Exception as e:
-        neg_used = used - int(file.file_size)
-        used_limit(update.from_user.id, neg_used)
-        await ms.edit(e)
-        return
-    splitpath = path.split("downloads/")
-    dow_file_name = splitpath[1]
-    old_file_name = {dow_file_name}
-    os.rename(old_file_name, file_path)
-    user_id = int(update.message.chat.id)
-    data = find(user_id)
+     	     
+    duration = 0
     try:
-        c_caption = data[1]
+        metadata = extractMetadata(createParser(file_path))
+        if metadata.has("duration"):
+           duration = metadata.get('duration').seconds
     except:
         pass
-    thumb = data[0]
+    ph_path = None
+    user_id = int(update.message.chat.id) 
+    media = getattr(file, file.media.value)
+    c_caption = await db.get_caption(update.message.chat.id)
+    c_thumb = await db.get_thumbnail(update.message.chat.id)
+
     if c_caption:
-        doc_list = ["filename", "filesize"]
-        new_tex = escape_invalid_curly_brackets(c_caption, doc_list)
-        caption = new_tex.format(
-            filename=new_filename, filesize=humanbytes(file.file_size))
+         try:
+             caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
+         except Exception as e:
+             return await ms.edit(text=f"Yᴏᴜʀ Cᴀᴩᴛɪᴏɴ Eʀʀᴏʀ Exᴄᴇᴩᴛ Kᴇyᴡᴏʀᴅ Aʀɢᴜᴍᴇɴᴛ ●> ({e})")             
     else:
-        caption = f"**{new_filename}**"
-    if thumb:
-        ph_path = await bot.download_media(thumb)
-        Image.open(ph_path).convert("RGB").save(ph_path)
-        img = Image.open(ph_path)
-        img.resize((320, 320))
-        img.save(ph_path, "JPEG")
-        c_time = time.time()
+         caption = f"**{new_filename}**"
+ 
+    if (media.thumbs or c_thumb):
+         if c_thumb:
+             ph_path = await bot.download_media(c_thumb) 
+         else:
+             ph_path = await bot.download_media(media.thumbs[0].file_id)
+         Image.open(ph_path).convert("RGB").save(ph_path)
+         img = Image.open(ph_path)
+         img.resize((320, 320))
+         img.save(ph_path, "JPEG")
 
     await ms.edit("Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....")
     type = update.data.split("_")[1]
-
     value = 2090000000
     if value < file.file_size:
         await ms.edit("```Trying To Upload```")
