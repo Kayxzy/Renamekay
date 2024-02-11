@@ -24,6 +24,8 @@ API_HASH = os.environ.get("API_HASH", "3f1373ede58a6d52d89ec0f8700fd688")
 
 STRING = os.environ.get("STRING", "")
 
+DOWNLOAD_DIR = os.environ.get("DOWNLOAD_DIR", "./downloads/")
+
 ADMIN = os.environ.get("ADMIN", "1668766845")
 
 app = Client("test", api_id=API_ID, api_hash=API_HASH, session_string=STRING)
@@ -67,18 +69,16 @@ async def doc(bot, update):
     total_used = used + int(file.file_size)
     used_limit(update.from_user.id, total_used)
     try:
-     	path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram,progress_args=("Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))                    
-    except Exception as e:
-     	return await ms.edit(e)
+        path = await bot.download_media(message=file, progress=progress_for_pyrogram, progress_args=("``` Trying To Download...```",  ms, c_time))
 
     except Exception as e:
         neg_used = used - int(file.file_size)
         used_limit(update.from_user.id, neg_used)
         await ms.edit(e)
         return
-    splitpath = path.split("downloads/")
+    splitpath = path.split("./downloads/")
     dow_file_name = splitpath[1]
-    old_file_name = {dow_file_name}
+    old_file_name = f"./downloads/{dow_file_name}"
     os.rename(old_file_name, file_path)
     user_id = int(update.message.chat.id)
     data = find(user_id)
@@ -86,7 +86,7 @@ async def doc(bot, update):
         c_caption = data[1]
     except:
         pass
-    
+    thumb = data[0]
     if c_caption:
         doc_list = ["filename", "filesize"]
         new_tex = escape_invalid_curly_brackets(c_caption, doc_list)
@@ -102,8 +102,8 @@ async def doc(bot, update):
         img.save(ph_path, "JPEG")
         c_time = time.time()
 
-    await ms.edit("Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....")
-    type = update.data.split("_")[1]
+    else:
+        ph_path = None
 
     value = 2090000000
     if value < file.file_size:
@@ -152,27 +152,25 @@ async def vid(bot, update):
     date = used_["date"]
     name = new_name.split(":-")
     new_filename = name[1]
-    file_path = f"downloads/{new_filename}"
+    file_path = f"DOWNLOAD_DIR/{new_filename}"
     message = update.message.reply_to_message
     file = message.document or message.video or message.audio
-    ms = await update.message.edit("Tʀyɪɴɢ Tᴏ Dᴏᴡɴʟᴏᴀᴅɪɴɢ....")
+    ms = await update.message.edit("```Trying To Download...```")
     used_limit(update.from_user.id, file.file_size)
     c_time = time.time()
     total_used = used + int(file.file_size)
     used_limit(update.from_user.id, total_used)
     try:
-     	path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram,progress_args=("Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))                    
-    except Exception as e:
-     	return await ms.edit(e)
-     	     
+        path = await bot.download_media(message=file, progress=progress_for_pyrogram, progress_args=("``` Trying To Download...```",  ms, c_time))
+
     except Exception as e:
         neg_used = used - int(file.file_size)
         used_limit(update.from_user.id, neg_used)
         await ms.edit(e)
         return
-    splitpath = path.split("downloads/")
+    splitpath = path.split("./downloads/")
     dow_file_name = splitpath[1]
-    old_file_name = f"downloads/{dow_file_name}"
+    old_file_name = f"DOWNLOAD_DIR/{dow_file_name}"
     os.rename(old_file_name, file_path)
     user_id = int(update.message.chat.id)
     data = find(user_id)
@@ -181,12 +179,16 @@ async def vid(bot, update):
     except:
         pass
     thumb = data[0]
-    if c_caption:
-        doc_list = ["filename", "filesize"]
-        new_tex = escape_invalid_curly_brackets(c_caption, doc_list)
-        caption = new_tex.format(
-            filename=new_filename, filesize=humanbytes(file.file_size))
 
+    duration = 0
+    metadata = extractMetadata(createParser(file_path))
+    if metadata.has("duration"):
+        duration = metadata.get('duration').seconds
+    if c_caption:
+        vid_list = ["filename", "filesize", "duration"]
+        new_tex = escape_invalid_curly_brackets(c_caption, vid_list)
+        caption = new_tex.format(filename=new_filename, filesize=humanbytes(
+            file.file_size), duration=timedelta(seconds=duration))
     else:
         caption = f"**{new_filename}**"
     if thumb:
@@ -198,7 +200,14 @@ async def vid(bot, update):
         c_time = time.time()
 
     else:
-        ph_path = None
+        try:
+            ph_path_ = await take_screen_shot(file_path, os.path.dirname(os.path.abspath(file_path)), random.randint(0, duration - 1))
+            width, height, ph_path = await fix_thumb(ph_path_)
+        except Exception as e:
+            ph_path = None
+            print(e)
+
+    value = 2090000000
     if value < file.file_size:
         await ms.edit("```Trying To Upload```")
         try:
@@ -258,7 +267,7 @@ async def aud(bot, update):
         used_limit(update.from_user.id, neg_used)
         await ms.edit(e)
         return
-    splitpath = path.split("downloads/")
+    splitpath = path.split("/downloads/")
     dow_file_name = splitpath[1]
     old_file_name = f"downloads/{dow_file_name}"
     os.rename(old_file_name, file_path)
