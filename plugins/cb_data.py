@@ -102,8 +102,8 @@ async def doc(bot, update):
         img.save(ph_path, "JPEG")
         c_time = time.time()
 
-    else:
-        ph_path = None
+    await ms.edit("Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....")
+    type = update.data.split("_")[1]
 
     value = 2090000000
     if value < file.file_size:
