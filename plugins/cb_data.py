@@ -161,6 +161,7 @@ async def vid(bot, update):
     total_used = used + int(file.file_size)
     used_limit(update.from_user.id, total_used)
     try:
+    try:
      	path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram,progress_args=("Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))                    
     except Exception as e:
      	return await ms.edit(e)
@@ -172,7 +173,7 @@ async def vid(bot, update):
         return
     splitpath = path.split("downloads/")
     dow_file_name = splitpath[1]
-    old_file_name = f"downloads/{dow_file_name}"
+    old_file_name = {dow_file_name}
     os.rename(old_file_name, file_path)
     user_id = int(update.message.chat.id)
     data = find(user_id)
@@ -181,16 +182,11 @@ async def vid(bot, update):
     except:
         pass
     thumb = data[0]
-
-    duration = 0
-    metadata = extractMetadata(createParser(file_path))
-    if metadata.has("duration"):
-        duration = metadata.get('duration').seconds
     if c_caption:
-        vid_list = ["filename", "filesize", "duration"]
-        new_tex = escape_invalid_curly_brackets(c_caption, vid_list)
-        caption = new_tex.format(filename=new_filename, filesize=humanbytes(
-            file.file_size), duration=timedelta(seconds=duration))
+        doc_list = ["filename", "filesize"]
+        new_tex = escape_invalid_curly_brackets(c_caption, doc_list)
+        caption = new_tex.format(
+            filename=new_filename, filesize=humanbytes(file.file_size))
     else:
         caption = f"**{new_filename}**"
     if thumb:
@@ -201,13 +197,8 @@ async def vid(bot, update):
         img.save(ph_path, "JPEG")
         c_time = time.time()
 
-    else:
-        try:
-            ph_path_ = await take_screen_shot(file_path, os.path.dirname(os.path.abspath(file_path)), random.randint(0, duration - 1))
-            width, height, ph_path = await fix_thumb(ph_path_)
-        except Exception as e:
-            ph_path = None
-            print(e)
+    await ms.edit("Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....")
+    type = update.data.split("_")[1]
 
     value = 2090000000
     if value < file.file_size:
