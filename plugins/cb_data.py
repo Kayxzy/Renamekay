@@ -74,7 +74,7 @@ async def doc(bot, update):
         used_limit(update.from_user.id, neg_used)
         await ms.edit(e)
         return
-    splitpath = path.split("/downloads/")
+    splitpath = path.split("downloads/")
     dow_file_name = splitpath[1]
     old_file_name = f"downloads/{dow_file_name}"
     os.rename(old_file_name, file_path)
@@ -166,7 +166,7 @@ async def vid(bot, update):
         used_limit(update.from_user.id, neg_used)
         await ms.edit(e)
         return
-    splitpath = path.split("/downloads/")
+    splitpath = path.split("downloads/")
     dow_file_name = splitpath[1]
     old_file_name = f"downloads/{dow_file_name}"
     os.rename(old_file_name, file_path)
@@ -265,7 +265,7 @@ async def aud(bot, update):
         used_limit(update.from_user.id, neg_used)
         await ms.edit(e)
         return
-    splitpath = path.split("/downloads/")
+    splitpath = path.split("downloads/")
     dow_file_name = splitpath[1]
     old_file_name = f"downloads/{dow_file_name}"
     os.rename(old_file_name, file_path)
