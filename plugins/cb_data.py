@@ -86,7 +86,7 @@ async def doc(bot, update):
         c_caption = data[1]
     except:
         pass
-    thumb = data[0]
+    
     if c_caption:
         doc_list = ["filename", "filesize"]
         new_tex = escape_invalid_curly_brackets(c_caption, doc_list)
