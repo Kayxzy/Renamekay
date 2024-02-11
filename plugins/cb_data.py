@@ -172,7 +172,7 @@ async def vid(bot, update):
            duration = metadata.get('duration').seconds
     except:
         pass
-    thumb = data[0]
+    
     if c_caption:
         doc_list = ["filename", "filesize"]
         new_tex = escape_invalid_curly_brackets(c_caption, doc_list)
