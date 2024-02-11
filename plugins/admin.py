@@ -55,7 +55,7 @@ async def vip1(bot,update):
 	id = update.message.reply_to_message.text.split("/addpremium")
 	user_id = id[1].replace("1668766845", "")
 	inlimit  = 10737418240
-	uploadlimit(int(user_id),10737418240)
+	uploadlimit(int(user_id), 10737418240)
 	usertype(int(user_id),"🪙 **SILVER**")
 	addpre(int(user_id))
 	await update.message.edit("Added successfully To Premium Upload limit 10 GB")
@@ -91,7 +91,7 @@ async def cp1(bot,update):
 	id = update.message.reply_to_message.text.split("/ceasepower")
 	user_id = id[1].replace("1668766845", "")
 	inlimit  = 524288000
-	uploadlimit(int(user_id),524288000)
+	uploadlimit(int(user_id), 524288000)
 	usertype(int(user_id),"**ACCOUNT DOWNGRADED**")
 	addpre(int(user_id))
 	await update.message.edit("ACCOUNT DOWNGRADED\nThe user can only use 100MB/day from Data qota")
