@@ -172,33 +172,25 @@ async def vid(bot, update):
            duration = metadata.get('duration').seconds
     except:
         pass
-    ph_path = None
-    user_id = int(update.message.chat.id)
-    data = find(user_id)
-    c_caption = await db.get_caption(update.message.chat.id)
-    c_thumb = await db.get_thumbnail(update.message.chat.id)
-
+    thumb = data[0]
     if c_caption:
-         try:
-             caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size), duration=convert(duration))
-         except Exception as e:
-             return await ms.edit(text=f"Yᴏᴜʀ Cᴀᴩᴛɪᴏɴ Eʀʀᴏʀ Exᴄᴇᴩᴛ Kᴇyᴡᴏʀᴅ Aʀɢᴜᴍᴇɴᴛ ●> ({e})")             
-    else:
-         caption = f"**{new_filename}**"
- 
-    if (media.thumbs or c_thumb):
-         if c_thumb:
-             ph_path = await bot.download_media(c_thumb) 
-         else:
-             ph_path = await bot.download_media(media.thumbs[0].file_id)
-         Image.open(ph_path).convert("RGB").save(ph_path)
-         img = Image.open(ph_path)
-         img.resize((320, 320))
-         img.save(ph_path, "JPEG")
+        doc_list = ["filename", "filesize"]
+        new_tex = escape_invalid_curly_brackets(c_caption, doc_list)
+        caption = new_tex.format(
+            filename=new_filename, filesize=humanbytes(file.file_size))
 
-    await ms.edit("Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....")
-    type = update.data.split("_")[1]
-    value = 2090000000
+    else:
+        caption = f"**{new_filename}**"
+    if thumb:
+        ph_path = await bot.download_media(thumb)
+        Image.open(ph_path).convert("RGB").save(ph_path)
+        img = Image.open(ph_path)
+        img.resize((320, 320))
+        img.save(ph_path, "JPEG")
+        c_time = time.time()
+
+    else:
+        ph_path = None
     if value < file.file_size:
         await ms.edit("```Trying To Upload```")
         try:
